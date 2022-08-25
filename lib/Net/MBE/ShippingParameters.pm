@@ -8,7 +8,7 @@ package Net::MBE::ShippingParameters {
     use namespace::clean;
     use SOAP::Lite;
 	use Net::MBE::Item;
-    use Arthas::Defaults::536;
+    use Arthas::Defaults::520;
 
 	# Mandatory fields
 	has destinationInfo => ( is => 'rw' );

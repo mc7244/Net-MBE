@@ -65,10 +65,10 @@ package Net::MBE {
     #use SOAP::Lite +trace => [ qw/all -objects/ ];
     use MIME::Base64;
     use HTTP::Headers;
-    use Arthas::Defaults::536;
+    use Arthas::Defaults::520;
     use version;
 
-    our $VERSION = qv("v0.2.0");
+    our $VERSION = qv("v0.2.1");
 
 	#$SOAP::Constants::DEFAULT_HTTP_CONTENT_TYPE = 'text/xml';
 	#$SOAP::Constants::DO_NOT_USE_CHARSET = 1;
