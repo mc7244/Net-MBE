@@ -37,7 +37,7 @@ Net::MBE - Perl library to access Mailboxes Etc (MBE) online webservices.
         shippingParameters => $shipparams,
     });
 
-    use Data::Dump qw/dump/; die dump($response);
+    use Data::Dump qw/dump/; print dump($response);
 
 =head1 DESCRIPTION
 
