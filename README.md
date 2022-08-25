@@ -5,7 +5,6 @@ Perl library to access Mailboxes Etc (MBE) online webservices
 ## SYNOPSIS
 
     use Net::MBE;
- 
     use Net::MBE::DestinationInfo;
     use Net::MBE::ShippingParameters;
 
