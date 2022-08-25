@@ -42,7 +42,7 @@ Net::MBE - Perl library to access Mailboxes Etc (MBE) online webservices.
 =head1 DESCRIPTION
 
 Mailboxes Etc (MBE), formerly a UPS-owned chain of shipping service outlets, is now an Italian
-independent company which operated in several european countries.
+independent company which operates in several european countries.
 
 This library is for accessing their various web services for getting rates, etc.
 
