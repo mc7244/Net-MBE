@@ -4,6 +4,7 @@ Perl library to access Mailboxes Etc (MBE) online webservices
 
 ## SYNOPSIS
 
+```perl
     use Net::MBE;
     use Net::MBE::DestinationInfo;
     use Net::MBE::ShippingParameters;
@@ -38,6 +39,7 @@ Perl library to access Mailboxes Etc (MBE) online webservices
     });
 
     use Data::Dump qw/dump/; die dump($response);
+```
 
 ## DESCRIPTION
 
@@ -50,7 +52,7 @@ Currently, ONLY getting shipping rates is implemented.
 
 ## AUTHOR
 
-Michele Beltrame, C<arthas@cpan.org>
+Michele Beltrame, arthas@cpan.org
 
 ## LICENSE
 
