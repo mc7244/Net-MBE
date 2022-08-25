@@ -1,3 +1,63 @@
+=head1 NAME
+
+Net::MBE - Perl library to access Mailboxes Etc (MBE) online webservices.
+
+=head1 SYNOPSIS
+
+    use Net::MBE;
+    use Net::MBE::DestinationInfo;
+    use Net::MBE::ShippingParameters;
+
+    my $mbe = Net::MBE->new({
+        system => 'IT',
+        Username => 'XXXXX',
+        Passphrase => 'YYYYYYYY',
+    });
+
+    my $dest = Net::MBE::DestinationInfo->new({
+        zipCode => '33085',
+        country => 'IT', 
+        state => 'PN'
+    });
+
+    my $shipparams = Net::MBE::ShippingParameters->new({
+        destinationInfo => $dest,
+        shipType => 'EXPORT',
+        packageType => 'GENERIC',
+    });
+    $shipparams->addItem({
+        weight => 1,
+        length => 10,
+        width  => 10,
+        height => 10,
+    });
+
+    my $response = $mbe->ShippingOptions({
+        internalReferenceID => '48147184XTST',
+        shippingParameters => $shipparams,
+    });
+
+    use Data::Dump qw/dump/; die dump($response);
+
+=head1 DESCRIPTION
+
+Mailboxes Etc (MBE), formerly a UPS-owned chain of shipping service outlets, is now an Italian
+independent company which operated in several european countries.
+
+This library is for accessing their various web services for getting rates, etc.
+
+Currently, ONLY getting shipping rates is implemented.
+
+=head1 AUTHOR
+
+Michele Beltrame, C<arthas@cpan.org>
+
+=head1 LICENSE
+
+This library is free software under the Mozilla Public License 2.0.
+
+=cut
+
 package Net::MBE {
     use Moo;
     use namespace::clean;
@@ -6,6 +66,9 @@ package Net::MBE {
     use MIME::Base64;
     use HTTP::Headers;
     use Arthas::Defaults::536;
+    use version;
+
+    our $VERSION = qv("v0.2.0");
 
 	#$SOAP::Constants::DEFAULT_HTTP_CONTENT_TYPE = 'text/xml';
 	#$SOAP::Constants::DO_NOT_USE_CHARSET = 1;
