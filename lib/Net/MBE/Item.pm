@@ -11,7 +11,7 @@ package Net::MBE::Item {
     use Moo;
     use namespace::clean;
     use SOAP::Lite;
-    use Arthas::Defaults::536;
+    use Arthas::Defaults::520;
 
     # Mandatory fields
 	has weight => ( is => 'rw' );

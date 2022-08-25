@@ -7,7 +7,7 @@ package Net::MBE::DestinationInfo {
     use Moo;
     use namespace::clean;
     use SOAP::Lite;
-    use Arthas::Defaults::536;
+    use Arthas::Defaults::520;
 
     # Mandatory fields
 	has zipCode => ( is => 'rw' );
