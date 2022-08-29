@@ -5,8 +5,6 @@ Net::MBE - Perl library to access Mailboxes Etc (MBE) online webservices.
 =head1 SYNOPSIS
 
     use Net::MBE;
-    use Net::MBE::DestinationInfo;
-    use Net::MBE::ShippingParameters;
 
     my $mbe = Net::MBE->new({
         system => 'IT',
@@ -61,6 +59,10 @@ This library is free software under the Mozilla Public License 2.0.
 package Net::MBE {
     use Moo;
     use namespace::clean;
+    use Net::MBE::DestinationInfo;
+    use Net::MBE::Item;
+    use Net::MBE::ShippingParameters;
+    use Net::MBE::Recipient;
     use SOAP::Lite;
     #use SOAP::Lite +trace => [ qw/all -objects/ ];
     use MIME::Base64;
@@ -68,7 +70,7 @@ package Net::MBE {
     use Arthas::Defaults::520;
     use version;
 
-    our $VERSION = qv("v0.2.2");
+    our $VERSION = qv("v0.3.0");
 
 	#$SOAP::Constants::DEFAULT_HTTP_CONTENT_TYPE = 'text/xml';
 	#$SOAP::Constants::DO_NOT_USE_CHARSET = 1;
