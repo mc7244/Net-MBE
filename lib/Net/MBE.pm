@@ -138,8 +138,8 @@ package Net::MBE {
 	# ShippingOptionsRequest
 	# ----------------------
 	# Gets shipping options for an indicated shipment parameters.
-	#	$internalReferenceID	->	string that is returned as is by the server.
-	#	$shippingParameters		->	object of type ShippingParameters with all
+	#	internalReferenceID	->	string that is returned as is by the server.
+	#	shippingParameters		->	object of type ShippingParameters with all
 	#									the required info.
 	sub ShippingOptions($self, $args) {
 		croak 'Invalid-internalReferenceID' if !$args->{internalReferenceID};
@@ -158,6 +158,33 @@ package Net::MBE {
 		croak 'Invalid-request' if !$som;
     	croak 'Request error: '.$som->fault->{ faultstring } if $som->fault;
 		return $som->body->{ShippingOptionsRequestResponse}->{RequestContainer};
+	}
+
+    # ShipmentRequest
+	# ---------------
+	#	internalReferenceId	->	string that will be returned as is.
+	#	recipient				->	Object of type Recipient with required info.
+	#	shipment				->	Object of type Shipment with required info.
+	sub Shipment($self, $args) {
+        croak 'Invalid-internalReferenceID' if !$args->{internalReferenceID};
+        croak 'Invalid-recipient' if !$args->{recipient};
+        croak 'Invalid-shipment' if !$args->{shipment};
+
+        my $params = SOAP::Data->name('RequestContainer' => \SOAP::Data->value(
+            SOAP::Data->name('System' => $self->system),
+            SOAP::Data->name('Credentials' => \SOAP::Data->value(
+                SOAP::Data->name('Username' => ''),
+                SOAP::Data->name('Passphrase' => ''),
+            )),
+            SOAP::Data->name('InternalReferenceID', $args->{internalReferenceID}),
+			SOAP::Data->name('Recipient' => $args->{recipient}->getSoapParams()),
+			SOAP::Data->name('Shipment' => $args->{shipment}->getSoapParams()),
+        ));
+
+        my $som = $self->soapClient->call("ShipmentsRequest", $params);
+		croak 'Invalid-request' if !$som;
+    	croak 'Request error: '.$som->fault->{ faultstring } if $som->fault;
+		return $som->body->{ShipmentsRequestResponse}->{RequestContainer};
 	}
 }
 
