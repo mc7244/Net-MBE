@@ -94,4 +94,4 @@ Michele Beltrame, `arthas@cpan.org`
 
 # LICENSE
 
-This library is free software under the Mozilla Public License 2.0.
+This library is free software under the Artistic License 2.0.
