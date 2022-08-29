@@ -10,8 +10,8 @@ Net::MBE - Perl library to access Mailboxes Etc (MBE) online webservices.
 
     my $mbe = Net::MBE->new({
         system => 'IT',
-        Username => 'XXXXX',
-        Passphrase => 'YYYYYYYY',
+        username => 'XXXXX',
+        passphrase => 'YYYYYYYY',
     });
 
     my $dest = Net::MBE::DestinationInfo->new({
@@ -113,7 +113,7 @@ package Net::MBE {
                 # ],
                 default_headers => HTTP::Headers->new(
                     'Content-type', 'text/xml; charset=utf-8', # MBE won't accept application/soap
-                    'Authorization', 'Basic '.encode_base64($args->{Username} . ':' . $args->{Passphrase})
+                    'Authorization', 'Basic '.encode_base64($args->{username} . ':' . $args->{passphrase})
                 ),
             ],
             #wsdl => $args->{endpoint},
