@@ -102,11 +102,6 @@ package Net::MBE {
         return $res;
 	}
 
-    # ShipmentRequest
-	# ---------------
-	#	internalReferenceId	->	string that will be returned as is.
-	#	recipient				->	Object of type Recipient with required info.
-	#	shipment				->	Object of type Shipment with required info.
 	sub Shipment($self, $args) {
         croak 'Invalid-internalReferenceID' if !$args->{internalReferenceID};
         croak 'Invalid-recipient' if !$args->{recipient};
@@ -199,6 +194,8 @@ Constructs the object. It accepts (and requires) 3 arguments.
 
 Get shipping options (i.e. rates) for sending a package. Re quires 2 paramenters:
 
+=head3 Arguments
+
 =over
 
 =item internalReferenceID
@@ -213,7 +210,25 @@ A L<Net::MBE::ShippingParameters> object.
 
 =head2 Shipment($args)
 
-Create a shipment, so that the van passes to pick it up.
+Request a shipment, so that the van passes to pick it up.
+
+=head3 Arguments
+
+=over
+
+=item internalReferenceID
+
+A local reference (which you find intact in the response) such as an order code or other type of string.
+
+=item recipient
+
+A L<Net::MBE::Recipient> object.
+
+=item shipment
+
+A L<Net::MBE::Shipment> object.
+
+=back
 
 =head1 AUTHOR
 

@@ -1,16 +1,15 @@
-# Net-MBE
+# NAME
 
-Perl library to access Mailboxes Etc (MBE) online webservices
+Net::MBE - Perl library to access Mailboxes Etc (MBE) online webservices.
 
-## SYNOPSIS
+# SYNOPSIS
 
-```perl
     use Net::MBE;
 
     my $mbe = Net::MBE->new({
         system => 'IT',
-        Username => 'XXXXX',
-        Passphrase => 'YYYYYYYY',
+        username => 'XXXXX',
+        passphrase => 'YYYYYYYY',
     });
 
     my $dest = Net::MBE::DestinationInfo->new({
@@ -37,21 +36,62 @@ Perl library to access Mailboxes Etc (MBE) online webservices
     });
 
     use Data::Dump qw/dump/; print dump($response);
-```
 
-## DESCRIPTION
+# DESCRIPTION
 
 Mailboxes Etc (MBE), formerly a UPS-owned chain of shipping service outlets, is now an Italian
-independent company which operated in several european countries.
+independent company which operates in several european countries.
 
 This library is for accessing their various web services for getting rates, etc.
 
-Currently, ONLY getting shipping rates is implemented.
+# METHODS
 
-## AUTHOR
+## new($args)
 
-Michele Beltrame, arthas@cpan.org
+Constructs the object. It accepts (and requires) 3 arguments.
 
-## LICENSE
+    my $mbe = Net::MBE->new({
+        system     => 'IT',         # 2-eltters ISO code of the country where you signed the agreement
+        username   => 'XXXXX',      # Username provided after signing
+        passphrase => 'YYYYYYYY',   # Password provided after signing
+    });
+
+## ShippingOptions($args)
+
+Get shipping options (i.e. rates) for sending a package. Re quires 2 paramenters:
+
+### Arguments
+
+- internalReferenceID
+
+    A local reference (which you find intact in the response) such as an order code or other type of string.
+
+- shippingParameters
+
+    A [Net::MBE::ShippingParameters](https://metacpan.org/pod/Net%3A%3AMBE%3A%3AShippingParameters) object.
+
+## Shipment($args)
+
+Request a shipment, so that the van passes to pick it up.
+
+### Arguments
+
+- internalReferenceID
+
+    A local reference (which you find intact in the response) such as an order code or other type of string.
+
+- recipient
+
+    A [Net::MBE::Recipient](https://metacpan.org/pod/Net%3A%3AMBE%3A%3ARecipient) object.
+
+- shipment
+
+    A [Net::MBE::Shipment](https://metacpan.org/pod/Net%3A%3AMBE%3A%3AShipment) object.
+
+# AUTHOR
+
+Michele Beltrame, `arthas@cpan.org`
+
+# LICENSE
 
 This library is free software under the Mozilla Public License 2.0.
