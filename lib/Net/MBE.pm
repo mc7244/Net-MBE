@@ -68,7 +68,7 @@ package Net::MBE {
     use Arthas::Defaults::520;
     use version;
 
-    our $VERSION = qv("v0.2.1");
+    our $VERSION = qv("v0.2.2");
 
 	#$SOAP::Constants::DEFAULT_HTTP_CONTENT_TYPE = 'text/xml';
 	#$SOAP::Constants::DO_NOT_USE_CHARSET = 1;
