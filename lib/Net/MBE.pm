@@ -3,12 +3,15 @@ package Net::MBE {
     use namespace::clean;
     use Net::MBE::DestinationInfo;
     use Net::MBE::Item;
-    use Net::MBE::ShippingParameters;
     use Net::MBE::Recipient;
+    use Net::MBE::ShippingOption;
+    use Net::MBE::ShippingOptionsResponse;
+    use Net::MBE::ShippingParameters;
     use SOAP::Lite;
     #use SOAP::Lite +trace => [ qw/all -objects/ ];
     use MIME::Base64;
     use HTTP::Headers;
+    use Data::Dump;
     use Arthas::Defaults::520;
     use version;
 
@@ -90,6 +93,12 @@ package Net::MBE {
         ));
 
         my $res = $self->_soapCall("ShippingOptions", $params);
+        if ( $res->{ShippingOptions} ) {
+            my @sos;
+            my $so = $res->{ShippingOptions}->{ShippingOption};  # TODO/FIXME: if multiple??
+            push @sos, Net::MBE::ShippingOption->new($so);
+            return Net::MBE::ShippingOptionsResponse->new({ shippingOptions => \@sos });
+        }
         return $res;
 	}
 
@@ -115,7 +124,7 @@ package Net::MBE {
         ));
 
         my $res = $self->_soapCall("Shipment", $params);
-        return $res;
+        croak Data::Dump::dump($res); # TODO: make a general fault object
 	}
 
     sub _soapCall($self, $soapmethod, $params) {
