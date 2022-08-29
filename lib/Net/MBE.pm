@@ -17,34 +17,34 @@ package Net::MBE {
 
     our $VERSION = qv("v0.3.0");
 
-	#$SOAP::Constants::DEFAULT_HTTP_CONTENT_TYPE = 'text/xml';
-	#$SOAP::Constants::DO_NOT_USE_CHARSET = 1;
+    #$SOAP::Constants::DEFAULT_HTTP_CONTENT_TYPE = 'text/xml';
+    #$SOAP::Constants::DO_NOT_USE_CHARSET = 1;
 
-	has system => ( is => 'rw' );
-	has endpoint => ( is => 'rw' );
-	has credentials => ( is => 'rw' );
-	has soapClient => ( is => 'rw' );
+    has system => ( is => 'rw' );
+    has endpoint => ( is => 'rw' );
+    has credentials => ( is => 'rw' );
+    has soapClient => ( is => 'rw' );
     
-	# Creates a new instance of WSMBEOnline to access OnlineMBE web services.
-	# ----------------------------------------------------------------------
-	# Parameters:
-	# 	$system		->	one of 'IT', 'ES', 'DE', 'FR', AT'. Allows correct
-	# 						selection of OnlineMBE instance and endpoint.
-	# 	$username	->	as supplied by MBE franchise.
-	# 	$passphrase	->	as supplied by MBE franchise.
-	sub BUILD($class, $args) {
-		if ($args->{system} eq 'IT') {
-			$class->endpoint( 'https://api.mbeonline.it/ws/e-link.wsdl' );
-		} elsif ($args->{system} eq 'ES') {
-			$class->endpoint( 'https://api.mbeonline.es/ws/e-link.wsdl' );
-		} elsif ($args->{system} eq 'DE') {
-			$class->endpoint( 'https://api.mbeonline.de/ws/e-link.wsdl' );
-		} elsif ($args->{system} eq 'FR') {
-			$class->endpoint( 'https://api.mbeonline.fr/ws/e-link.wsdl' );
-		} elsif ($args->{system} eq 'PL') {
-			$class->endpoint( 'https://api.mbeonline.pl/ws/e-link.wsdl' );
-		}
-		
+    # Creates a new instance of WSMBEOnline to access OnlineMBE web services.
+    # ----------------------------------------------------------------------
+    # Parameters:
+    # 	$system		->	one of 'IT', 'ES', 'DE', 'FR', AT'. Allows correct
+    # 						selection of OnlineMBE instance and endpoint.
+    # 	$username	->	as supplied by MBE franchise.
+    # 	$passphrase	->	as supplied by MBE franchise.
+    sub BUILD($class, $args) {
+        if ($args->{system} eq 'IT') {
+            $class->endpoint( 'https://api.mbeonline.it/ws/e-link.wsdl' );
+        } elsif ($args->{system} eq 'ES') {
+            $class->endpoint( 'https://api.mbeonline.es/ws/e-link.wsdl' );
+        } elsif ($args->{system} eq 'DE') {
+            $class->endpoint( 'https://api.mbeonline.de/ws/e-link.wsdl' );
+        } elsif ($args->{system} eq 'FR') {
+            $class->endpoint( 'https://api.mbeonline.fr/ws/e-link.wsdl' );
+        } elsif ($args->{system} eq 'PL') {
+            $class->endpoint( 'https://api.mbeonline.pl/ws/e-link.wsdl' );
+        }
+        
         #use Data::Dump qw/dump/; die dump($args->{Username}, $args->{Passphrase});
 
         my $proxy = $class->{endpoint} =~ s/(\/e-link\.wsdl)$//xsr;
@@ -66,21 +66,21 @@ package Net::MBE {
             #wsdl => $args->{endpoint},
         );
 
-		# Server seems to only support 1.1, or at least only text/xml as content type
+        # Server seems to only support 1.1, or at least only text/xml as content type
         $soapClient->soapversion('1.1');
         $soapClient->serializer->soapversion('1.1');
 
-		$soapClient->ns('http://schemas.xmlsoap.org/soap/envelope/', 'SOAP-ENV');
+        $soapClient->ns('http://schemas.xmlsoap.org/soap/envelope/', 'SOAP-ENV');
         $soapClient->ns('http://www.onlinembe.eu/ws/','ns1');
         $soapClient->envprefix('SOAP-ENV');
         $soapClient->autotype(0);
 
         $class->soapClient($soapClient);
         $class->credentials({'Username' => '', Passphrase => ''});
-	}
+    }
 
-	sub ShippingOptions($self, $args) {
-		croak 'Invalid-internalReferenceID' if !$args->{internalReferenceID};
+    sub ShippingOptions($self, $args) {
+        croak 'Invalid-internalReferenceID' if !$args->{internalReferenceID};
 
         my $params = SOAP::Data->name('RequestContainer' => \SOAP::Data->value(
             SOAP::Data->name('System' => $self->system),
@@ -89,7 +89,7 @@ package Net::MBE {
                 SOAP::Data->name('Passphrase' => ''),
             )),
             SOAP::Data->name('InternalReferenceID', $args->{internalReferenceID}),
-			SOAP::Data->name('ShippingParameters' => $args->{shippingParameters}->getSoapParams()),
+            SOAP::Data->name('ShippingParameters' => $args->{shippingParameters}->getSoapParams()),
         ));
 
         my $res = $self->_soapCall("ShippingOptions", $params);
@@ -100,9 +100,9 @@ package Net::MBE {
             return Net::MBE::ShippingOptionsResponse->new({ shippingOptions => \@sos });
         }
         return $res;
-	}
+    }
 
-	sub Shipment($self, $args) {
+    sub Shipment($self, $args) {
         croak 'Invalid-internalReferenceID' if !$args->{internalReferenceID};
         croak 'Invalid-recipient' if !$args->{recipient};
         croak 'Invalid-shipment' if !$args->{shipment};
@@ -114,19 +114,19 @@ package Net::MBE {
                 SOAP::Data->name('Passphrase' => ''),
             )),
             SOAP::Data->name('InternalReferenceID', $args->{internalReferenceID}),
-			SOAP::Data->name('Recipient' => $args->{recipient}->getSoapParams()),
-			SOAP::Data->name('Shipment' => $args->{shipment}->getSoapParams()),
+            SOAP::Data->name('Recipient' => $args->{recipient}->getSoapParams()),
+            SOAP::Data->name('Shipment' => $args->{shipment}->getSoapParams()),
         ));
 
         my $res = $self->_soapCall("Shipment", $params);
         croak Data::Dump::dump($res); # TODO: make a general fault object
-	}
+    }
 
     sub _soapCall($self, $soapmethod, $params) {
         my $som = $self->soapClient->call($soapmethod.'Request', $params);
-		confess 'Invalid-request (forgotted or invalid credentals maybe?)' if !$som;
-    	confess 'Request error: '.$som->fault->{ faultstring } if $som->fault;
-		return $som->body->{$soapmethod.'RequestResponse'}->{RequestContainer};
+        confess 'Invalid-request (forgotted or invalid credentals maybe?)' if !$som;
+        confess 'Request error: '.$som->fault->{ faultstring } if $som->fault;
+        return $som->body->{$soapmethod.'RequestResponse'}->{RequestContainer};
     }
 }
 
