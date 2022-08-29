@@ -76,13 +76,6 @@ package Net::MBE {
         $class->credentials({'Username' => '', Passphrase => ''});
 	}
 
-
-	# ShippingOptionsRequest
-	# ----------------------
-	# Gets shipping options for an indicated shipment parameters.
-	#	internalReferenceID	->	string that is returned as is by the server.
-	#	shippingParameters		->	object of type ShippingParameters with all
-	#									the required info.
 	sub ShippingOptions($self, $args) {
 		croak 'Invalid-internalReferenceID' if !$args->{internalReferenceID};
 
@@ -96,10 +89,8 @@ package Net::MBE {
 			SOAP::Data->name('ShippingParameters' => $args->{shippingParameters}->getSoapParams()),
         ));
 
-        my $som = $self->soapClient->call("ShippingOptionsRequest", $params);
-		croak 'Invalid-request' if !$som;
-    	croak 'Request error: '.$som->fault->{ faultstring } if $som->fault;
-		return $som->body->{ShippingOptionsRequestResponse}->{RequestContainer};
+        my $res = $self->_soapCall("ShippingOptions", $params);
+        return $res;
 	}
 
     # ShipmentRequest
@@ -123,11 +114,16 @@ package Net::MBE {
 			SOAP::Data->name('Shipment' => $args->{shipment}->getSoapParams()),
         ));
 
-        my $som = $self->soapClient->call("ShipmentsRequest", $params);
-		croak 'Invalid-request' if !$som;
-    	croak 'Request error: '.$som->fault->{ faultstring } if $som->fault;
-		return $som->body->{ShipmentsRequestResponse}->{RequestContainer};
+        my $res = $self->_soapCall("Shipment", $params);
+        return $res;
 	}
+
+    sub _soapCall($self, $soapmethod, $params) {
+        my $som = $self->soapClient->call($soapmethod.'Request', $params);
+		confess 'Invalid-request (forgotted or invalid credentals maybe?)' if !$som;
+    	confess 'Request error: '.$som->fault->{ faultstring } if $som->fault;
+		return $som->body->{$soapmethod.'RequestResponse'}->{RequestContainer};
+    }
 }
 
 1;
