@@ -1,26 +1,3 @@
-=head1 NAME
-
-Net::MBE::Recepient
-
-=head1 DESCRIPTION
-
-See L<Net::MBE> for documentation.
-
-=head1 AUTHOR
-
-Michele Beltrame, C<arthas@cpan.org>
-
-=head1 LICENSE
-
-This library is free software under the Mozilla Public License 2.0.
-
-=cut
-
-# Recipient
-# --------
-# To be used with Shipment request.
-# Mandatory fields:
-#	name, companyname, address, phone, zipcode, city, country, email
 package Net::MBE::Recipient {
     use Moo;
     use namespace::clean;
@@ -72,3 +49,24 @@ package Net::MBE::Recipient {
 }
 
 1;
+
+=head1 NAME
+
+Net::MBE::Recipient - Object representing a recipient.
+
+=head1 DESCRIPTIOM
+
+To be used with C<Shipment> method of L<Net::MBE>.
+
+=head1 METHODS
+
+# Mandatory fields:
+#	name, companyname, address, phone, zipcode, city, country, email
+
+=head1 AUTHOR
+
+Michele Beltrame, C<arthas@cpan.org>
+
+=head1 LICENSE
+
+This library is free software under the Mozilla Public License 2.0.

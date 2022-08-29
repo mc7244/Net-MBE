@@ -1,12 +1,3 @@
-# Item
-# --------
-# To be used with Shipment and ShippingOptions requests.
-#
-# This class is not meant to be created directly but thru
-# the addItem functions of Shipment and ShippintOptions.
-#
-# Mandatory fields:
-#	weight, length, height, width
 package Net::MBE::Item {
     use Moo;
     use namespace::clean;
@@ -39,3 +30,21 @@ package Net::MBE::Item {
 }
 
 1;
+
+=head1 NAME
+
+Net::MBE::Item - Object representing an item to ship (i.e. a package).
+
+=head1 DESCRIPTIOM
+
+To be used with C<Shipment> and C<ShippingOptions> methods of L<Net::MBE>.
+
+This class is not meant to be created directly but through the C<addItem> functions of L<Net::MBE::ShippingParameters>.
+
+=head1 AUTHOR
+
+Michele Beltrame, C<arthas@cpan.org>
+
+=head1 LICENSE
+
+This library is free software under the Mozilla Public License 2.0.

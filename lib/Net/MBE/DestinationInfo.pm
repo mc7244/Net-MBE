@@ -1,8 +1,3 @@
-# DestinationInfo
-# ------------------
-# To be used with ShippingOptions request, thru ShippingParameters class.
-# Mandatory fields:
-#	zipCode, country
 package Net::MBE::DestinationInfo {
     use Moo;
     use namespace::clean;
@@ -36,3 +31,25 @@ package Net::MBE::DestinationInfo {
 }
 
 1;
+
+=head1 NAME
+
+Net::MBE::DestinationInfo - Object representing a generic destination.
+
+=head1 DESCRIPTIOM
+
+To be used with C<ShippingOptions> request, through L<Net::MBE::ShippingParameters> class.
+
+=head1 METHODS
+
+# Mandatory fields:
+#	zipCode, country
+
+=head1 AUTHOR
+
+Michele Beltrame, C<arthas@cpan.org>
+
+=head1 LICENSE
+
+This library is free software under the Mozilla Public License 2.0.
+

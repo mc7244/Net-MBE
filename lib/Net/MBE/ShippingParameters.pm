@@ -1,8 +1,3 @@
-# ShippingParameters
-# ------------------
-# To be used with ShippingOptions request.
-# Mandatory fields:
-#	destinationInfo, shipType, packageType, items
 package Net::MBE::ShippingParameters {
 	use Moo;
     use namespace::clean;
@@ -74,3 +69,25 @@ package Net::MBE::ShippingParameters {
 }
 
 1;
+
+=head1 NAME
+
+Net::MBE::ShippingParameters - Object representing shipping parameters.
+
+=head1 DESCRIPTIOM
+
+To be used with ShippingOptions method of L<Net::MBE>.
+
+=head1 METHODS
+
+# Mandatory fields:
+#	destinationInfo, shipType, packageType, items
+
+=head1 AUTHOR
+
+Michele Beltrame, C<arthas@cpan.org>
+
+=head1 LICENSE
+
+This library is free software under the Mozilla Public License 2.0.
+

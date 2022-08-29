@@ -196,12 +196,17 @@ Constructs the object. It accepts (and requires) 3 arguments.
 
 Get shipping options (i.e. rates) for sending a package. Re quires 2 paramenters:
 
-    my $response = $mbe->ShippingOptions({
-        internalReferenceID => 'ORDER_CODE_OR_OTHER_THING',
-        shippingParameters  => $shipparams,
-    });
+=over
 
-C<$shipparams> is a L<Net::MBE::ShippingParameters> object.
+=item internalReferenceID
+
+A local reference (which you find intact in the response) such as an order code or other type of string.
+
+=item shippingParameters
+
+A L<Net::MBE::ShippingParameters> object.
+
+=back
 
 =head2 Shipment($args)
 
