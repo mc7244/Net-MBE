@@ -178,8 +178,6 @@ independent company which operates in several european countries.
 
 This library is for accessing their various web services for getting rates, etc.
 
-Currently, ONLY getting shipping rates is implemented.
-
 =head1 METHODS
 
 =head2 new($args)
