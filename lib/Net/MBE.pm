@@ -80,7 +80,7 @@ package Net::MBE {
     }
 
     sub ShippingOptions($self, $args) {
-        croak 'Invalid-internalReferenceID' if !$args->{internalReferenceID};
+        croak 'Invalid-InternalReferenceID' if !$args->{InternalReferenceID};
 
         my $params = SOAP::Data->name('RequestContainer' => \SOAP::Data->value(
             SOAP::Data->name('System' => $self->system),
@@ -88,14 +88,19 @@ package Net::MBE {
                 SOAP::Data->name('Username' => ''),
                 SOAP::Data->name('Passphrase' => ''),
             )),
-            SOAP::Data->name('InternalReferenceID', $args->{internalReferenceID}),
-            SOAP::Data->name('ShippingParameters' => $args->{shippingParameters}->getSoapParams()),
+            SOAP::Data->name('InternalReferenceID', $args->{InternalReferenceID}),
+            SOAP::Data->name('ShippingParameters' => $args->{ShippingParameters}->getSoapParams()),
         ));
 
         my $res = $self->_soapCall("ShippingOptions", $params);
-        if ( $res->{ShippingOptions} ) {
+        my $res_sos = $res->{ShippingOptions};
+        if ( $res_sos ) {
+            # Make an array even if it's one only, so we have a coherent processing 
+
+        }
+        if ( $ ) {
             my @sos;
-            my $so = $res->{ShippingOptions}->{ShippingOption};  # TODO/FIXME: if multiple??
+            my $so = $res->{ShippingOptions}->{ShippingOption};
             push @sos, Net::MBE::ShippingOption->new($so);
             return Net::MBE::ShippingOptionsResponse->new({ shippingOptions => \@sos });
         }
@@ -103,7 +108,7 @@ package Net::MBE {
     }
 
     sub Shipment($self, $args) {
-        croak 'Invalid-internalReferenceID' if !$args->{internalReferenceID};
+        croak 'Invalid-InternalReferenceID' if !$args->{InternalReferenceID};
         croak 'Invalid-recipient' if !$args->{recipient};
         croak 'Invalid-shipment' if !$args->{shipment};
 
@@ -113,7 +118,7 @@ package Net::MBE {
                 SOAP::Data->name('Username' => ''),
                 SOAP::Data->name('Passphrase' => ''),
             )),
-            SOAP::Data->name('InternalReferenceID', $args->{internalReferenceID}),
+            SOAP::Data->name('InternalReferenceID', $args->{InternalReferenceID}),
             SOAP::Data->name('Recipient' => $args->{recipient}->getSoapParams()),
             SOAP::Data->name('Shipment' => $args->{shipment}->getSoapParams()),
         ));
@@ -165,8 +170,8 @@ Net::MBE - Perl library to access Mailboxes Etc (MBE) online webservices.
     });
 
     my $response = $mbe->ShippingOptions({
-        internalReferenceID => '48147184XTST',
-        shippingParameters => $shipparams,
+        InternalReferenceID => '48147184XTST',
+        ShippingParameters => $shipparams,
     });
 
     use Data::Dump qw/dump/; print dump($response);
@@ -198,11 +203,11 @@ Get shipping options (i.e. rates) for sending a package. Re quires 2 paramenters
 
 =over
 
-=item internalReferenceID
+=item InternalReferenceID
 
 A local reference (which you find intact in the response) such as an order code or other type of string.
 
-=item shippingParameters
+=item ShippingParameters
 
 A L<Net::MBE::ShippingParameters> object.
 
@@ -216,7 +221,7 @@ Request a shipment, so that the van passes to pick it up.
 
 =over
 
-=item internalReferenceID
+=item InternalReferenceID
 
 A local reference (which you find intact in the response) such as an order code or other type of string.
 
@@ -232,7 +237,7 @@ A L<Net::MBE::Shipment> object.
 
 =head1 AUTHOR
 
-Michele Beltrame, C<arthas@cpan.org>
+Michele Beltrame, C<mb@blendgroup.it>
 
 =head1 LICENSE
 
